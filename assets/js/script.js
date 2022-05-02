@@ -2,7 +2,10 @@
 $('#currentDay').text(moment().format('dddd, MMMM Do')) ;
 
 // initiate an array to store data in the localStorage
-var data = [];
+var data = JSON.parse(localStorage.getItem('data'));
+if (!data){
+   data = [];
+}
 // objects will be appended in this array. 
 // The properties of these objects are: time, text
 
@@ -26,6 +29,48 @@ var auditBlockColor = function(index, el){
    });
    
 }
+// saving tasks in the localeStorage
+var storeData = function(){
+   localStorage.setItem('data', JSON.stringify(data));
+}
+
+// loading the tasks
+var loadData = function(){
+   var data_arr = JSON.parse(localStorage.getItem('data'));;
+   
+   // if the arr is empty or nothing is saved in the localStorage
+   if (!data_arr){
+      data = [];
+   }
+   
+   $.each(data_arr, function(index, value){
+      // match the time-block id with index
+      var selectedRow = $("#"+value.time);
+      var selectedBlock = selectedRow.find('.time-block');
+      selectedBlock.text(value.text);
+      
+   });
+
+};
+
+// event handler for savebtn
+$(".saveBtn").click(function(){
+   // find the time (index) block it belongs to 
+   var index = $(this).closest(".row")
+      .attr('id');
+   // get the text from the sibling time-block
+   var textCont = $(this).siblings(".time-block").text();
+
+   // create New Object
+   var newObj = {
+      time: index,
+      text: textCont
+   };
+   // put the new object in the array
+   data.push(newObj);
+   storeData();
+   console.log(data);
+})
 
 // Event handler for changing the text content of the time-block
 $('.container').on('click','.time-block', function(){
@@ -69,7 +114,10 @@ $('.container').on('blur','textarea', function(){
 
    $(this).replaceWith(textDiv);
 
+
 });
 
+// load all the saved events
+loadData();
 // check/change the color every half an hour.
 setInterval(auditBlockColor(), 1000 * 1800);
