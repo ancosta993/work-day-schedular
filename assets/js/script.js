@@ -80,7 +80,8 @@ $('.container').on('click','.time-block', function(){
 
    // create the textarea
    var textInput = $("<textarea>")
-      .addClass('form-control')
+      // .addClass('form-control')
+      .addClass('col-10')
       .val(text);
 
    $(this).replaceWith(textInput);
