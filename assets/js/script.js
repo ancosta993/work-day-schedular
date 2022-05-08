@@ -69,7 +69,6 @@ $(".saveBtn").click(function(){
    // put the new object in the array
    data.push(newObj);
    storeData();
-   console.log(data);
 })
 
 // Event handler for changing the text content of the time-block
