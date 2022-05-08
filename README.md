@@ -65,3 +65,6 @@ There are three main event listeners and handlers.
 - The entered text can be saved by clicking the `.saveBtn` button which calls the `storeData` function.
 
 ## Final Look
+![Unchanged](./assets/final/TOP-2.PNG)
+
+![Changed](./assets/final/TOP.PNG)
